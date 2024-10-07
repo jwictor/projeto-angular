@@ -1,1 +1,7 @@
-<p>masterpage works!</p>
+<div class="po-wrapper-menu-panel">
+    <po-menu-panel [p-menus]="menus" p-logo="https://po-ui.io/assets/po-logos/po_color_bg.svg"></po-menu-panel>
+    <po-page-default [p-title]="title">
+        <router-outlet></router-outlet>
+    </po-page-default>
+
+</div>
