@@ -1,1 +1,15 @@
-<p>customerpage works!</p>
+<po-page-list p-title="Customer List">
+    <po-list-view
+        [p-items]="CustomerList"
+        p-property-title="nome"
+    >
+        <ng-template p-list-view-content-template let-customer>
+            <div class="po-row">
+                <po-info class="po-sm-8 po-md-2 po-lg-2 po-xl-2" p-label="Codigo" [p-value]="customer.codigo"/>
+                <po-info class="po-sm-4 po-md-2 po-lg-2 po-xl-2" p-label="Loja" [p-value]="customer.loja"/>
+                <po-info class="po-sm-12 po-md-4 po-lg-3 po-xl-2" p-label="Endereco" [p-value]="customer.endereco"/>
+                <po-info class="po-sm-10 po-md-2 po-lg-2 po-xl-2" p-label="Telefone" [p-value]="customer.telefone"/>
+            </div>
+        </ng-template>
+    </po-list-view>
+</po-page-list>

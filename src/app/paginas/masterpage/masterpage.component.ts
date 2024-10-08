@@ -22,6 +22,6 @@ export class MasterpageComponent {
     ]
 
     clickItemMenu(menu: PoMenuPanelItem):void {
-
+        this.title = menu.label
     }
 }
