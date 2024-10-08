@@ -2,6 +2,7 @@
     <po-list-view
         [p-items]="CustomerList"
         p-property-title="nome"
+        (p-title-action)="showDetail($event)"
     >
         <ng-template p-list-view-content-template let-customer>
             <div class="po-row">
@@ -12,4 +13,19 @@
             </div>
         </ng-template>
     </po-list-view>
+
+    <po-modal #modalCustomer [p-title]="detailCustomer.nome">
+        <div class="po-row">
+            <po-info class="po-sm-8 po-md-2 po-lg-2 po-xl-2" p-label="Codigo" [p-value]="detailCustomer.codigo"/>
+            <po-info class="po-sm-4 po-md-2 po-lg-2 po-xl-2" p-label="Loja" [p-value]="detailCustomer.loja"/>
+        </div>
+        <div class="po-row">
+            <po-info class="po-sm-12 po-md-6 po-lg-6 po-xl-6" p-label="Endereco" [p-value]="detailCustomer.endereco"/>
+            <po-info class="po-sm-10 po-md-6 po-lg-6 po-xl-6" p-label="Telefone" [p-value]="detailCustomer.telefone"/>
+        </div>
+        <div class="po-row">
+            <po-info class="po-sm-12 po-md-6 po-lg-6 po-xl-6" p-label="Status" [p-value]="detailCustomer.status"/>
+            <po-info class="po-sm-10 po-md-6 po-lg-6 po-xl-6" p-label="Email" [p-value]="detailCustomer.email"/>
+        </div>
+    </po-modal>
 </po-page-list>
