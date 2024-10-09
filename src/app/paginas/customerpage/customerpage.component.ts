@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { PoInfoModule, PoListViewModule, PoModalComponent, PoModalModule, PoPageModule } from '@po-ui/ng-components';
+import { PoInfoModule, PoListViewModule, PoModalComponent, PoModalModule, PoPageFilter, PoPageModule } from '@po-ui/ng-components';
 import { Customer } from '../../classes/customer';
 import { CustomerService } from '../../services/customer.service';
 
@@ -12,9 +12,11 @@ import { CustomerService } from '../../services/customer.service';
 })
 export class CustomerpageComponent implements OnInit {
 
-  public CustomerList: Customer[] = []
+  CustomerList: Customer[] = []
+  CustomerListFiltered: Array<Customer> = []
   detailCustomer: Customer = new Customer()
   #customerService = inject(CustomerService)
+  filterSettings: PoPageFilter = {placeholder: "Filtrar por nome ou endereço", action: this.customerFilter.bind(this)}
 
   @ViewChild('modalCustomer') modalCustomerElement !: PoModalComponent
 
@@ -41,11 +43,18 @@ export class CustomerpageComponent implements OnInit {
     })
 
     this.CustomerList = itens
+    this.CustomerListFiltered = itens
   }
 
   showDetail(customer: Customer):void {
     this.detailCustomer = customer;
     this.modalCustomerElement.open();
 
+  }
+
+  customerFilter(content: string){
+    this.CustomerListFiltered = this.CustomerList.filter(customer => 
+      customer.nome.indexOf(content.toUpperCase()) >= 0 || 
+      customer.endereco.indexOf(content.toUpperCase()) >= 0 )
   }
 }

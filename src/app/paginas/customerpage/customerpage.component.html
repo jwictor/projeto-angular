@@ -1,6 +1,6 @@
-<po-page-list p-title="Customer List">
+<po-page-list p-title="Customer List" [p-filter]="filterSettings">
     <po-list-view
-        [p-items]="CustomerList"
+        [p-items]="CustomerListFiltered"
         p-property-title="nome"
         (p-title-action)="showDetail($event)"
     >
