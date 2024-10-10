@@ -1,17 +1,18 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { PoInfoModule, PoListViewModule, PoModalComponent, PoModalModule, PoPageFilter, PoPageModule } from '@po-ui/ng-components';
+import { PoInfoModule, PoListViewModule, PoLoadingModule, PoModalComponent, PoModalModule, PoPageFilter, PoPageModule } from '@po-ui/ng-components';
 import { Customer } from '../../classes/customer';
 import { CustomerService } from '../../services/customer.service';
 
 @Component({
   selector: 'app-customerpage',
   standalone: true,
-  imports: [PoPageModule,PoListViewModule, PoInfoModule,PoModalModule],
+  imports: [PoPageModule,PoListViewModule, PoInfoModule,PoModalModule,PoLoadingModule],
   templateUrl: './customerpage.component.html',
   styleUrl: './customerpage.component.css'
 })
 export class CustomerpageComponent implements OnInit {
 
+  isLoading: boolean = true
   CustomerList: Customer[] = []
   CustomerListFiltered: Array<Customer> = []
   detailCustomer: Customer = new Customer()
@@ -44,6 +45,9 @@ export class CustomerpageComponent implements OnInit {
 
     this.CustomerList = itens
     this.CustomerListFiltered = itens
+
+    setTimeout(()=>this.isLoading = false,1000)
+    
   }
 
   showDetail(customer: Customer):void {
