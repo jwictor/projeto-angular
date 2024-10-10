@@ -29,12 +29,12 @@ export class CustomerpageComponent implements OnInit {
     
     let req = this.#customerService.getCustomers()
     let itens: Array<Customer> = []
+    const hideload = () => this.isLoading = false
 
     req.subscribe({
       next(value: any) {
-        value.items.forEach((el:Customer) => {
-          itens.push(el)
-        });
+        value.items.forEach((el:Customer) => itens.push(el));
+        hideload()
       },
       error(err){
         console.log(`error req customer list`, err)
@@ -46,8 +46,6 @@ export class CustomerpageComponent implements OnInit {
 
     this.CustomerList = itens
     this.CustomerListFiltered = itens
-
-    setTimeout(()=>this.isLoading = false,1000)
     
   }
 
