@@ -25,6 +25,7 @@ export class CustomerpageComponent implements OnInit {
   }
 
   loadData():void {
+    
     let req = this.#customerService.getCustomers()
     let itens: Array<Customer> = []
 
