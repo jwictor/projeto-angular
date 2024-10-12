@@ -8,10 +8,10 @@ export class Product {
     status: string;
 
     constructor(){
-        this.codigo = ' ';
-        this.nome = ' ';
-        this.categoria = ' ';
-        this.um = ' ';
+        this.codigo = '';
+        this.nome = '';
+        this.categoria = '';
+        this.um = '';
         this.preco = 0;
         this.quantidade = 0;
         this.status = 'ATIVO';

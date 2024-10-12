@@ -2,13 +2,13 @@
     <po-loading-overlay p-text="Buscando"></po-loading-overlay>
 }
 
-<po-page-list p-title="Product List" [p-filter]="filterSettings">
+<po-page-list p-title="Produtos" [p-filter]="filterSettings">
     <po-list-view 
         [p-items]="productListFiltered"
         [p-actions]="productAction"
         p-property-title="nome"
     >
-        <ng-template p-list-viw-content-template let-product>
+        <ng-template p-list-view-content-template let-product>
             <div class="po-row">
                 <po-info class="po-sm-12 po-md-12 po-lg-2 po-xl-2" p-label="Nome" [p-value]="product.nome"/>
                 <po-info class="po-sm-12 po-md-12 po-lg-2 po-xl-2" p-label="Codigo" [p-value]="product.codigo"/>

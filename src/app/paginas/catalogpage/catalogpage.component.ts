@@ -29,6 +29,7 @@ export class CatalogpageComponent implements OnInit{
     let itens: Array<Product> = []
 
     req.subscribe((res: any) => {
+      console.log(res)
         res.items.forEach((el: Product) => itens.push(el));
         this.isLoading = false
       }
