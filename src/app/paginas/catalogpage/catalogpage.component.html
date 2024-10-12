@@ -15,5 +15,11 @@
                 <po-info class="po-sm-12 po-md-12 po-lg-2 po-xl-2" p-label="Preco" [p-value]="product.preco"/>
             </div>
         </ng-template>
+        <ng-template p-list-view-detail-template let-product >
+            <div class="po-row">
+                <po-info class="po-sm-12 po-md-12 po-lg-2 po-xl-2" p-label="Un. Medida" [p-value]="product.um"/>
+                <po-number p-label="Quantidade" [(ngModel)]="product.quantidade" [p-min]="1" name="quantidade"/>
+            </div>
+        </ng-template>
     </po-list-view>
 </po-page-list>

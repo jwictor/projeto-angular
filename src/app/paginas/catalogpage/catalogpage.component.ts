@@ -2,11 +2,12 @@ import { Component, inject, OnInit} from '@angular/core';
 import { PoFieldModule, PoInfoModule, PoListViewModule, PoLoadingModule, PoModalModule, PoPageFilter, PoPageModule } from '@po-ui/ng-components';
 import { Product } from '../../classes/products';
 import { ProductService } from '../../services/product.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-catalogpage',
   standalone: true,
-  imports: [PoPageModule,PoListViewModule,PoInfoModule,PoModalModule,PoLoadingModule],
+  imports: [PoPageModule,PoListViewModule,PoInfoModule,PoModalModule,PoLoadingModule,PoFieldModule,FormsModule],
   templateUrl: './catalogpage.component.html',
   styleUrl: './catalogpage.component.css'
 })
