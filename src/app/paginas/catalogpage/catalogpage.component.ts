@@ -1,5 +1,5 @@
 import { Component, inject, OnInit} from '@angular/core';
-import { PoFieldModule, PoInfoModule, PoListViewModule, PoLoadingModule, PoModalModule, PoPageFilter, PoPageModule } from '@po-ui/ng-components';
+import { PoFieldModule, PoInfoModule, PoListViewModule, PoLoadingModule, PoModalModule, PoPageAction, PoPageFilter, PoPageModule } from '@po-ui/ng-components';
 import { Product } from '../../classes/products';
 import { ProductService } from '../../services/product.service';
 import { FormsModule } from '@angular/forms';
@@ -52,5 +52,12 @@ export class CatalogpageComponent implements OnInit{
       product.categoria.indexOf(content.toUpperCase()) >= 0)
   }
 
+  readonly productAction: Array<PoPageAction> = [
+    {label: 'Cart', action: this.clickAddCart.bind(this), icon: 'po-icon po-icon-cart'}
+  ]
 
-}
+  clickAddCart(): void {
+
+  }
+
+} 

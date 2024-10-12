@@ -5,6 +5,7 @@
 <po-page-list p-title="Product List" [p-filter]="filterSettings">
     <po-list-view 
         [p-items]="productListFiltered"
+        [p-actions]="productAction"
         p-property-title="nome"
     >
         <ng-template p-list-viw-content-template let-product>
