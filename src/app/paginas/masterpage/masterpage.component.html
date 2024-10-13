@@ -11,5 +11,9 @@
 </div>
 
 <po-page-slide #slideCart p-title="Carrinho" p-size="sm">
-
+    <div class="po-row">
+        <po-info class="po-sm-8" p-label="Valor" [p-value]="this.valueCart.toLocaleString('pt-BR',{style: 'currency', currency: 'BRL'})"/>
+        <po-button class="po-sm-4" p-label="Confirmar" (p-click)="clickConfirmCart()" p-kind="primary" />
+    </div>
+    <po-divider p-label="ITENS" />
 </po-page-slide>
