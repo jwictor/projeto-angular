@@ -3,6 +3,7 @@ import { PoFieldModule, PoInfoModule, PoListViewModule, PoLoadingModule, PoModal
 import { Product } from '../../classes/products';
 import { ProductService } from '../../services/product.service';
 import { FormsModule } from '@angular/forms';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-catalogpage',
@@ -17,6 +18,7 @@ export class CatalogpageComponent implements OnInit{
   productListFiltered: Array<Product> = []
   detailproduct: Product = new Product()
   #productService = inject(ProductService)
+  #cartService = inject(CartService)
   filterSettings: PoPageFilter = {placeholder: "Filtrar por nome ou categoria", action: this.productFilter.bind(this)}
 
   ngOnInit(): void {
@@ -40,7 +42,7 @@ export class CatalogpageComponent implements OnInit{
   }
 
   addCart(item: Product) {
-    console.log(`add item`,item)
+   this.#cartService.addItem(item);
   }
 
   showDetail(product: Product):void {
