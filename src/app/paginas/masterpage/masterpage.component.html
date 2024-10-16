@@ -16,4 +16,18 @@
         <po-button class="po-sm-4" p-label="Confirmar" (p-click)="clickConfirmCart()" p-kind="primary" />
     </div>
     <po-divider p-label="ITENS" />
+    
+    @for(li of cart.itens; track li) {
+        @if(li.ativo){
+            <div class="po-row">
+                <po-info [p-orientation]="orientation" class="po-sm-12" p-label="Item" [p-value]="li.id.toString()" />
+                <po-info  class="po-sm-12"  [p-value]="li.item.nome" />
+                <po-info [p-orientation]="orientation" class="po-sm-12" p-label="Quantidade" [p-value]="li.item.quantidade.toString()" />
+                <po-info [p-orientation]="orientation" class="po-sm-12" p-label="Preco" [p-value]="li.item.preco.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})" />
+                <po-info [p-orientation]="orientation" class="po-sm-12" p-label="Valor" [p-value]="(li.item.quantidade * li.item.preco).toLocaleString('pt-BR',{style:'currency', currency: 'BRL'})" />
+            </div>
+            <po-divider/>
+        }
+    }
+
 </po-page-slide>

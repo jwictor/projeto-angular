@@ -4,7 +4,7 @@ export class Cart {
     codCliente: string = '';
     lojCliente: string = '';
     nomeCliente: string = '';
-    itens: Array<any> = [];
+    itens: Array<ItemCart> = [];
     valor:number = 0;
 }
 
