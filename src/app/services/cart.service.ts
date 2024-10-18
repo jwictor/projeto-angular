@@ -47,6 +47,8 @@ export class CartService {
     }
 
     updateCart(){
-
+        let valor:number = 0;
+        this.cart.itens.forEach((li) => valor += li.ativo ? (li.item.preco * li.item.quantidade) : 0 )
+        this.value$.next(valor);
     }
 }

@@ -20,7 +20,8 @@
     @for(li of cart.itens; track li) {
         @if(li.ativo){
             <div class="po-row">
-                <po-info [p-orientation]="orientation" class="po-sm-12" p-label="Item" [p-value]="li.id.toString()" />
+                <po-info [p-orientation]="orientation" class="po-sm-11" p-label="Item" [p-value]="li.id.toString()" />
+                <i class="po-sm-1 po-icon po-icon-delete" (click)="clickDellItem(li)"></i> 
                 <po-info  class="po-sm-12"  [p-value]="li.item.nome" />
                 <po-info [p-orientation]="orientation" class="po-sm-12" p-label="Quantidade" [p-value]="li.item.quantidade.toString()" />
                 <po-info [p-orientation]="orientation" class="po-sm-12" p-label="Preco" [p-value]="li.item.preco.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})" />

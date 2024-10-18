@@ -3,7 +3,7 @@ import {  RouterModule } from '@angular/router';
 import { PoMenuModule, PoMenuPanelItem, PoMenuPanelModule, PoPageAction, PoPageModule, PoPageSlideComponent, PoPageSlideModule, PoInfoModule, PoButtonModule, PoDividerModule, PoInfoOrientation} from '@po-ui/ng-components';
 import { CartService } from '../../services/cart.service';
 import { Subscription } from 'rxjs';
-import { Cart } from '../../classes/cart';
+import { Cart, ItemCart } from '../../classes/cart';
 
 @Component({
   selector: 'app-masterpage',
@@ -56,6 +56,11 @@ export class MasterpageComponent implements OnDestroy {
 
     clickOpenCart(): void {
       this.slideCart.open()
+    }
+
+    clickDellItem(item: ItemCart){
+      item.ativo = false;
+      this.#cartService.updateCart();
     }
 
     clickConfirmCart():void {
