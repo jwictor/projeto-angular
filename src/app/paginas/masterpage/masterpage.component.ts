@@ -12,7 +12,8 @@ import {
   PoButtonModule, 
   PoDividerModule,
   PoInfoOrientation, PoNotificationService, PoModalModule, PoFieldModule,
-  PoModalComponent} from '@po-ui/ng-components';
+  PoModalComponent,
+  PoComboComponent} from '@po-ui/ng-components';
 import { CartService } from '../../services/cart.service';
 import { environment } from '../../../environments/environment.development';
 import { Subscription } from 'rxjs';
@@ -51,7 +52,9 @@ export class MasterpageComponent implements OnDestroy {
 
     urlfiltercustomer: string = `${environment.url}/curso/api/tabelas/sa1`;
 
+    @ViewChild('slideCart') slideCart !: PoPageSlideComponent;
     @ViewChild('modalCustomer') modalCustomerEl !: PoModalComponent;
+    @ViewChild('comboCustomer') comboCustomerEl !: PoComboComponent;
 
 
     constructor(){
@@ -79,7 +82,7 @@ export class MasterpageComponent implements OnDestroy {
       {label: 'Select Customer', action: () => this.modalCustomerEl.open(), icon: 'po-icon po-icon-user' },
     ]
 
-    @ViewChild('slideCart') slideCart !: PoPageSlideComponent;
+  
 
     clickItemMenu(menu: PoMenuPanelItem):void {
         this.title = menu.label
@@ -101,6 +104,11 @@ export class MasterpageComponent implements OnDestroy {
     }
 
     confirmeModal():void {
+
+      let codigo: string = this.comboCustomerEl.selectedOption.value;
+      let nome: string = this.comboCustomerEl.selectedOption.label;
+
+      console.log('Combo', codigo, nome)
       this.modalCustomerEl.close();
     }
 
