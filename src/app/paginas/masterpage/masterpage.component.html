@@ -32,3 +32,20 @@
     }
 
 </po-page-slide>
+
+<po-modal #modalCustomer p-title="Select a Customer">
+    <div class="po-row">
+        <po-combo #comboCustomer
+            class="po-md-12"
+            name="comboCustomer"
+            p-placeholder="Select a Customer"
+            [p-filter-service]="urlfiltercustomer"
+            p-field-label="nome"
+            p-field-value="codigo"
+        ></po-combo>
+    </div>
+
+    <po-modal-footer>
+        <po-button p-label="Confirmar" p-kind="primary" (p-click)="confirmeModal()" />
+    </po-modal-footer>
+</po-modal>

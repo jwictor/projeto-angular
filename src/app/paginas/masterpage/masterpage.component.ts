@@ -1,14 +1,39 @@
 import { Component, inject, OnDestroy, ViewChild } from '@angular/core';
 import {  RouterModule } from '@angular/router';
-import { PoMenuModule, PoMenuPanelItem, PoMenuPanelModule, PoPageAction, PoPageModule, PoPageSlideComponent, PoPageSlideModule, PoInfoModule, PoButtonModule, PoDividerModule, PoInfoOrientation, PoNotificationService} from '@po-ui/ng-components';
+import { 
+  PoMenuModule, 
+  PoMenuPanelItem, 
+  PoMenuPanelModule, 
+  PoPageAction, 
+  PoPageModule, 
+  PoPageSlideComponent, 
+  PoPageSlideModule, 
+  PoInfoModule, 
+  PoButtonModule, 
+  PoDividerModule,
+  PoInfoOrientation, PoNotificationService, PoModalModule, PoFieldModule,
+  PoModalComponent} from '@po-ui/ng-components';
 import { CartService } from '../../services/cart.service';
+import { environment } from '../../../environments/environment.development';
 import { Subscription } from 'rxjs';
 import { Cart, ItemCart } from '../../classes/cart';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-masterpage',
   standalone: true,
-  imports: [PoMenuModule,PoMenuPanelModule,PoPageModule,RouterModule, PoPageSlideModule, PoInfoModule, PoButtonModule,PoDividerModule],
+  imports: [
+    PoMenuModule,
+    PoMenuPanelModule,
+    PoPageModule,
+    RouterModule, 
+    PoPageSlideModule, 
+    PoInfoModule, 
+    PoButtonModule,
+    PoDividerModule,
+    PoModalModule,
+    PoFieldModule,
+    FormsModule],
   templateUrl: './masterpage.component.html',
   styleUrl: './masterpage.component.css'
 })
@@ -23,6 +48,10 @@ export class MasterpageComponent implements OnDestroy {
     cart: Cart = new Cart()
     sub = new Subscription()
     orientation: PoInfoOrientation = PoInfoOrientation.Horizontal;
+
+    urlfiltercustomer: string = `${environment.url}/curso/api/tabelas/sa1`;
+
+    @ViewChild('modalCustomer') modalCustomerEl !: PoModalComponent;
 
 
     constructor(){
@@ -46,7 +75,8 @@ export class MasterpageComponent implements OnDestroy {
     ]
 
     readonly actions: Array<PoPageAction> = [
-      {label: 'Cart', action: this.clickOpenCart.bind(this), icon: 'po-icon po-icon-cart'}
+      {label: 'Cart', action: this.clickOpenCart.bind(this), icon: 'po-icon po-icon-cart'},
+      {label: 'Select Customer', action: () => this.modalCustomerEl.open(), icon: 'po-icon po-icon-user' },
     ]
 
     @ViewChild('slideCart') slideCart !: PoPageSlideComponent;
@@ -68,6 +98,10 @@ export class MasterpageComponent implements OnDestroy {
         this.#notify.setDefaultDuration(1000)
         this.#notify.error('ERRO!');
       }
+    }
+
+    confirmeModal():void {
+      this.modalCustomerEl.close();
     }
 
     clickConfirmCart():void {
