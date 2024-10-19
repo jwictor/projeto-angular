@@ -1,5 +1,5 @@
 import { Component, inject, OnInit} from '@angular/core';
-import { PoFieldModule, PoInfoModule, PoListViewModule, PoLoadingModule, PoModalModule, PoPageAction, PoPageFilter, PoPageModule } from '@po-ui/ng-components';
+import { PoFieldModule, PoInfoModule, PoListViewModule, PoLoadingModule, PoModalModule, PoNotificationService, PoPageAction, PoPageFilter, PoPageModule } from '@po-ui/ng-components';
 import { Product } from '../../classes/products';
 import { ProductService } from '../../services/product.service';
 import { FormsModule } from '@angular/forms';
@@ -19,6 +19,7 @@ export class CatalogpageComponent implements OnInit{
   detailproduct: Product = new Product()
   #productService = inject(ProductService)
   #cartService = inject(CartService)
+  #notify = inject(PoNotificationService)
   filterSettings: PoPageFilter = {placeholder: "Filtrar por nome ou categoria", action: this.productFilter.bind(this)}
 
   ngOnInit(): void {
@@ -42,7 +43,13 @@ export class CatalogpageComponent implements OnInit{
   }
 
   addCart(item: Product) {
-   this.#cartService.addItem(item);
+   if(this.#cartService.addItem(item)) {
+    this.#notify.setDefaultDuration(1000);
+    this.#notify.success('Item incluido!')
+   } else {
+    this.#notify.setDefaultDuration(10000);
+    this.#notify.error('ERRO');
+   }
   }
 
   showDetail(product: Product):void {
@@ -56,7 +63,7 @@ export class CatalogpageComponent implements OnInit{
   }
 
   readonly productAction: Array<PoPageAction> = [
-    {label: 'Cart', action: this.clickAddCart.bind(this), icon: 'po-icon po-icon-cart'}
+    {label: 'Cart', action: this.addCart.bind(this), icon: 'po-icon po-icon-cart'}
   ]
 
   clickAddCart(): void {

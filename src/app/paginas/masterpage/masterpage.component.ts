@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, ViewChild } from '@angular/core';
 import {  RouterModule } from '@angular/router';
-import { PoMenuModule, PoMenuPanelItem, PoMenuPanelModule, PoPageAction, PoPageModule, PoPageSlideComponent, PoPageSlideModule, PoInfoModule, PoButtonModule, PoDividerModule, PoInfoOrientation} from '@po-ui/ng-components';
+import { PoMenuModule, PoMenuPanelItem, PoMenuPanelModule, PoPageAction, PoPageModule, PoPageSlideComponent, PoPageSlideModule, PoInfoModule, PoButtonModule, PoDividerModule, PoInfoOrientation, PoNotificationService} from '@po-ui/ng-components';
 import { CartService } from '../../services/cart.service';
 import { Subscription } from 'rxjs';
 import { Cart, ItemCart } from '../../classes/cart';
@@ -16,6 +16,7 @@ export class MasterpageComponent implements OnDestroy {
 
     title: string = 'Home'
     #cartService = inject(CartService)
+    #notify = inject(PoNotificationService)
     valueCart$ = this.#cartService.getcartValue();
     valueCart: number = 0;
     cart$ = this.#cartService.getCart();
@@ -60,7 +61,13 @@ export class MasterpageComponent implements OnDestroy {
 
     clickDellItem(item: ItemCart){
       item.ativo = false;
-      this.#cartService.updateCart();
+      if(this.#cartService.updateCart()) {
+        this.#notify.setDefaultDuration(1000)
+        this.#notify.success('Item deletado!')
+      } else {
+        this.#notify.setDefaultDuration(1000)
+        this.#notify.error('ERRO!');
+      }
     }
 
     clickConfirmCart():void {

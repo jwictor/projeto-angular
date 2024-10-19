@@ -19,9 +19,8 @@ export class CartService {
         return this.cart$.asObservable();
     }
 
-    addItem(item: Product){
-
-        console.log('item', item);
+    addItem(item: Product) : boolean{
+        
         if(typeof item.quantidade !== 'number'){
             item['quantidade'] = 1
         }
@@ -44,11 +43,15 @@ export class CartService {
 
         this.value$.next(valor);
         this.cart$.next(this.cart)
+
+        return true;
     }
 
-    updateCart(){
+    updateCart() : boolean {
         let valor:number = 0;
         this.cart.itens.forEach((li) => valor += li.ativo ? (li.item.preco * li.item.quantidade) : 0 )
         this.value$.next(valor);
+
+        return true;
     }
 }
