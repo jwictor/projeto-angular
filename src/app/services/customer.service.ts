@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Customer } from '../classes/customer';
 
 @Injectable({
@@ -11,6 +11,8 @@ export class CustomerService {
 
   #http = inject(HttpClient)
   #url = environment.url
+  #customerList$ = new Subject<Customer[]>;
+  #customerSelected$ = new BehaviorSubject<Customer>(new Customer());
 
   constructor() {}
 
@@ -18,5 +20,21 @@ export class CustomerService {
     let url: string = `${this.#url}/curso/api/tabelas/sa1`
 
     return this.#http.get<Array<Customer>>(url)
+  }
+
+  public setListCustomer(listCustomer: Customer[]): void {
+    this.#customerList$.next(listCustomer);
+  }
+
+  public getListCustomer(){
+    return this.#customerList$.asObservable();
+  }
+
+  public setCustomerSelected(customer: Customer) {
+    this.#customerSelected$.next(customer);
+  }
+
+  public getCustomerSelected() {
+    return this.#customerSelected$.asObservable();
   }
 }

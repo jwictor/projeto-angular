@@ -15,10 +15,12 @@ import {
   PoModalComponent,
   PoComboComponent} from '@po-ui/ng-components';
 import { CartService } from '../../services/cart.service';
+import { CustomerService } from '../../services/customer.service';
 import { environment } from '../../../environments/environment.development';
 import { Subscription } from 'rxjs';
 import { Cart, ItemCart } from '../../classes/cart';
 import { FormsModule } from '@angular/forms';
+import { Customer } from '../../classes/customer';
 
 @Component({
   selector: 'app-masterpage',
@@ -43,10 +45,15 @@ export class MasterpageComponent implements OnDestroy {
     title: string = 'Home'
     #cartService = inject(CartService)
     #notify = inject(PoNotificationService)
+    #customerService = inject(CustomerService)
     valueCart$ = this.#cartService.getcartValue();
     valueCart: number = 0;
     cart$ = this.#cartService.getCart();
     cart: Cart = new Cart()
+    listCustomer$  = this.#customerService.getCustomers();
+    listCustomer: any;
+    customerSelected$ = this.#customerService.getCustomerSelected();
+    customerSelected: Customer = new Customer();
     sub = new Subscription()
     orientation: PoInfoOrientation = PoInfoOrientation.Horizontal;
 
@@ -60,8 +67,12 @@ export class MasterpageComponent implements OnDestroy {
     constructor(){
       const subValue = this.valueCart$.subscribe(vlr => this.valueCart = vlr)
       const subCart = this.cart$.subscribe(cart => this.cart = cart)
+      const subList = this.listCustomer$.subscribe(list => this.listCustomer = list);
+      const subCustomer = this.customerSelected$.subscribe(customer => this.customerSelected = customer)
       this.sub.add(subValue)
       this.sub.add(subCart)
+      this.sub.add(subList);
+      this.sub.add(subCustomer);
     }
 
     ngOnDestroy(): void {
@@ -103,12 +114,18 @@ export class MasterpageComponent implements OnDestroy {
       }
     }
 
-    confirmeModal():void {
+    confirmModal():void {
 
       let codigo: string = this.comboCustomerEl.selectedOption.value;
       let nome: string = this.comboCustomerEl.selectedOption.label;
+      let list: Array<Customer> = this.listCustomer.items;
 
-      console.log('Combo', codigo, nome)
+      list.forEach((customer: Customer) => {
+        if(customer.codigo === codigo && customer.nome === nome){
+          this.#customerService.setCustomerSelected(customer);
+        }
+      })
+      
       this.modalCustomerEl.close();
     }
 

@@ -46,6 +46,7 @@ export class CustomerpageComponent implements OnInit {
 
     this.CustomerList = itens
     this.CustomerListFiltered = itens
+    this.#customerService.setListCustomer(itens);
     
   }
 

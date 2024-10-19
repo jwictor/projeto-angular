@@ -4,7 +4,7 @@
     p-logo="https://po-ui.io/assets/po-logos/po_color_bg.svg"/>
 
     <po-page-default 
-    [p-title]="title"
+    [p-title]="customerSelected.nome"
     [p-actions]="actions">
         <router-outlet></router-outlet>
     </po-page-default>
@@ -46,6 +46,6 @@
     </div>
 
     <po-modal-footer>
-        <po-button p-label="Confirmar" p-kind="primary" (p-click)="confirmeModal()" />
+        <po-button p-label="Confirmar" p-kind="primary" (p-click)="confirmModal()" />
     </po-modal-footer>
 </po-modal>
