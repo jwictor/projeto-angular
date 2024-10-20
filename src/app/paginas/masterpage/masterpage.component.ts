@@ -13,7 +13,8 @@ import {
   PoDividerModule,
   PoInfoOrientation, PoNotificationService, PoModalModule, PoFieldModule,
   PoModalComponent,
-  PoComboComponent} from '@po-ui/ng-components';
+  PoComboComponent,
+  PoNotification} from '@po-ui/ng-components';
 import { CartService } from '../../services/cart.service';
 import { CustomerService } from '../../services/customer.service';
 import { environment } from '../../../environments/environment.development';
@@ -116,16 +117,26 @@ export class MasterpageComponent implements OnDestroy {
 
     confirmModal():void {
 
-      let codigo: string = this.comboCustomerEl.selectedOption.value;
-      let nome: string = this.comboCustomerEl.selectedOption.label;
+      let codigo: string = this.comboCustomerEl.selectedValue;
+      let nome: string = '';
       let list: Array<Customer> = this.listCustomer.items;
+      let customerSelected: Customer = new Customer;
+      let notify: PoNotification = {
+        message: 'nenhum cliente selecionado!',
+        duration: 3000,
+      }
 
+      if(codigo){
+        nome = this.comboCustomerEl.selectedOption.label
       list.forEach((customer: Customer) => {
         if(customer.codigo === codigo && customer.nome === nome){
-          this.#customerService.setCustomerSelected(customer);
+          customerSelected = customer;
+          notify.message = `Novo cliente Selecionaodo: ${customer.nome}`
         }
       })
-      
+    }
+      this.#customerService.setCustomerSelected(customerSelected);
+      this.#notify.information(notify);
       this.modalCustomerEl.close();
     }
 
