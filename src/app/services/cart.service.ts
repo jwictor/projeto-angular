@@ -47,7 +47,24 @@ export class CartService implements OnDestroy{
     }
 
     getCartERP(): void {
+        let codCliente: string = this.customerSelected.codigo;
+        let lojCliente: string = this.customerSelected.loja;
+        this.http.get<Cart>(`${this.url}/curso/api/cart/itens/${codCliente}/${lojCliente}`)
+        .subscribe({
+            next: (value) => {
+                this.cart = new Cart();
+                this.cart.codCliente = value.codCliente;
+                this.cart.lojCliente = value.lojCliente;
+                this.cart.nomeCliente = value.nomeCliente;
+                this.cart.valor = value.valor;
+                this.cart.itens = value.itens;
 
+                this.cart$.next(this.cart);
+                this.value$.next(this.cart.valor);
+            },
+            error: (err) => console.log('error', err),
+            complete: () => {}
+        })
     }
 
     getcartValue() {

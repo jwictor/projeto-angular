@@ -107,6 +107,7 @@ export class MasterpageComponent implements OnDestroy {
     clickDellItem(item: ItemCart){
       item.ativo = false;
       if(this.#cartService.updateCart()) {
+        let isSendCart: boolean = this.#cartService.sendCartERP();
         this.#notify.setDefaultDuration(1000)
         this.#notify.success('Item deletado!')
       } else {
@@ -137,6 +138,7 @@ export class MasterpageComponent implements OnDestroy {
     }
       this.#customerService.setCustomerSelected(customerSelected);
       this.#notify.information(notify);
+      this.#cartService.getCartERP();
       this.modalCustomerEl.close();
     }
 
