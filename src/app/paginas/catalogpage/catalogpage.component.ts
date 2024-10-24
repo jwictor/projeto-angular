@@ -73,6 +73,7 @@ constructor(){
     }
 
    if(this.#cartService.addItem(item)) {
+    let isSincCart: boolean = this.#cartService.sendCartERP();
     this.#notify.setDefaultDuration(1000);
     this.#notify.success('Item incluido!')
    } else {

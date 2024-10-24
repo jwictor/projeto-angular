@@ -1,15 +1,54 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable, OnDestroy } from "@angular/core";
 import { Cart } from "../classes/cart";
 import { Product } from "../classes/products";
-import { BehaviorSubject, Subject } from "rxjs";
+import { BehaviorSubject, Subject, Subscription } from "rxjs";
+import { CustomerService } from "./customer.service";
+import { Customer } from "../classes/customer";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../environments/environment.development";
 
 @Injectable({providedIn: 'root'})
 
-export class CartService {
+export class CartService implements OnDestroy{
 
     private cart: Cart = new Cart
     private value$ = new BehaviorSubject<number>(0)
     private cart$ = new Subject<Cart>;
+    private customerService = inject(CustomerService);
+    private customerSelected$ = this.customerService.getCustomerSelected();
+    private customerSelected: Customer = new Customer();
+    private sub = new Subscription();
+    private http = inject(HttpClient);
+    private url = environment.url;
+
+    constructor(){
+        const subCustomer = this.customerSelected$.subscribe(customer => this.customerSelected = customer);
+        this.sub.add(subCustomer);
+    }
+
+    ngOnDestroy(): void {
+        this.sub.unsubscribe();
+    }
+
+    sendCartERP(): boolean {
+        this.cart.codCliente = this.customerSelected.codigo;
+        this.cart.lojCliente = this.customerSelected.loja;
+        this.cart.nomeCliente = this.customerSelected.nome;
+
+        let isSincCart: boolean = true;
+
+        this.http.post(`${this.url}/curso/api/cart`,this.cart).subscribe({
+            next: (value) => isSincCart = true,
+            error: (err) => console.log(`error`,err),
+            complete:() => {}
+        })
+        
+        return isSincCart;
+    }
+
+    getCartERP(): void {
+
+    }
 
     getcartValue() {
         return this.value$.asObservable();
