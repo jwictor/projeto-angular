@@ -10,7 +10,8 @@
     </po-page-default>
 </div>
 
-<po-page-slide #slideCart p-title="Carrinho" p-size="sm">
+<po-page-slide #slideCart p-title="Carrinho" p-size="sm" style="position: relative;">
+    <po-loading-overlay [hidden]="hiddenOverlayCart" p-text="Aguarde" [p-screen-lock]="false"/>
 
     <div class="po-row">
         @if(this.cart.codigo){

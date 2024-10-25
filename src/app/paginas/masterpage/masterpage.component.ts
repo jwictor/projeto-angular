@@ -14,7 +14,9 @@ import {
   PoInfoOrientation, PoNotificationService, PoModalModule, PoFieldModule,
   PoModalComponent,
   PoComboComponent,
-  PoNotification} from '@po-ui/ng-components';
+  PoNotification,
+  PoDialogService,
+  PoLoadingModule} from '@po-ui/ng-components';
 import { CartService } from '../../services/cart.service';
 import { CustomerService } from '../../services/customer.service';
 import { environment } from '../../../environments/environment.development';
@@ -37,6 +39,7 @@ import { Customer } from '../../classes/customer';
     PoDividerModule,
     PoModalModule,
     PoFieldModule,
+    PoLoadingModule,
     FormsModule],
   templateUrl: './masterpage.component.html',
   styleUrl: './masterpage.component.css'
@@ -47,6 +50,7 @@ export class MasterpageComponent implements OnDestroy {
     #cartService = inject(CartService)
     #notify = inject(PoNotificationService)
     #customerService = inject(CustomerService)
+    #dialog = inject(PoDialogService);
     valueCart$ = this.#cartService.getcartValue();
     valueCart: number = 0;
     cart$ = this.#cartService.getCart();
@@ -57,6 +61,8 @@ export class MasterpageComponent implements OnDestroy {
     customerSelected: Customer = new Customer();
     sub = new Subscription()
     orientation: PoInfoOrientation = PoInfoOrientation.Horizontal;
+    hiddenOverlayCart$ = this.#cartService.getHiddenLoading();
+    hiddenOverlayCart: boolean = true;
 
     urlfiltercustomer: string = `${environment.url}/curso/api/tabelas/sa1`;
 
@@ -70,10 +76,12 @@ export class MasterpageComponent implements OnDestroy {
       const subCart = this.cart$.subscribe(cart => this.cart = cart)
       const subList = this.listCustomer$.subscribe(list => this.listCustomer = list);
       const subCustomer = this.customerSelected$.subscribe(customer => this.customerSelected = customer)
+      const subHidden = this.hiddenOverlayCart$.subscribe(hidden => this.hiddenOverlayCart = hidden);
       this.sub.add(subValue)
       this.sub.add(subCart)
       this.sub.add(subList);
       this.sub.add(subCustomer);
+      this.sub.add(subHidden);
     }
 
     ngOnDestroy(): void {
@@ -144,5 +152,13 @@ export class MasterpageComponent implements OnDestroy {
 
     clickConfirmCart():void {
 
+      let isConfirm: boolean = false;
+
+      this.#dialog.confirm({
+        title: 'Confirmação de Encerramento',
+        message: 'Confirma o encerramento do carrinho?',
+        confirm: () =>{ isConfirm = this.#cartService.confirmCartERP()},
+        cancel: () => {console.log('Clicou em cancelar')}
+      })
     }
 }

@@ -1,11 +1,12 @@
 import { inject, Injectable, OnDestroy } from "@angular/core";
-import { Cart } from "../classes/cart";
+import { Cart, RespConfirmOrcamento } from "../classes/cart";
 import { Product } from "../classes/products";
 import { BehaviorSubject, Subject, Subscription } from "rxjs";
 import { CustomerService } from "./customer.service";
 import { Customer } from "../classes/customer";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment.development";
+import { PoDialogService, PoNotificationService } from "@po-ui/ng-components";
 
 @Injectable({providedIn: 'root'})
 
@@ -17,9 +18,11 @@ export class CartService implements OnDestroy{
     private customerService = inject(CustomerService);
     private customerSelected$ = this.customerService.getCustomerSelected();
     private customerSelected: Customer = new Customer();
+    private hiddenLoading$ = new BehaviorSubject<boolean>(true);
     private sub = new Subscription();
     private http = inject(HttpClient);
     private url = environment.url;
+    private notify = inject(PoNotificationService);
 
     constructor(){
         const subCustomer = this.customerSelected$.subscribe(customer => this.customerSelected = customer);
@@ -72,6 +75,40 @@ export class CartService implements OnDestroy{
             error: (err) => console.log('error', err),
             complete: () => {}
         })
+    }
+
+    confirmCartERP(): boolean {
+
+        this.hiddenLoading$.next(false);
+
+        let isConfirm: boolean = false
+        let codCliente: string = this.customerSelected.codigo;
+        let lojCliente: string = this.customerSelected.loja;
+        let codCart: string = this.cart.codigo;
+
+        if(codCart){
+            this.notify.warning({duration: 2000, message: 'Carrinho vazio'}) 
+            return false;
+        } 
+
+        this.http.get<RespConfirmOrcamento>(`${this.url}/curso/api/cart/confirm/${codCliente}/${lojCliente}/${codCart}`)
+        .subscribe({
+            next: (value) => { 
+                isConfirm = true, 
+                this.notify.success({ duration: 2000, message: `Novo Orçamento Criado: ${value.codigo}`}),
+            this.cart = new Cart(),
+            this.cart$.next(this.cart),
+            this.value$.next(0)
+        },
+            error: (err) => {console.log(`erro`, err)},
+            complete: () => {this.hiddenLoading$.next(true);}
+        })
+
+        return isConfirm;
+    }
+
+    getHiddenLoading(){
+        return this.hiddenLoading$.asObservable();
     }
 
     getcartValue() {
