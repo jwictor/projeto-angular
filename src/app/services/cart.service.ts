@@ -31,18 +31,19 @@ export class CartService implements OnDestroy{
     }
 
     sendCartERP(): boolean {
+
         this.cart.codCliente = this.customerSelected.codigo;
         this.cart.lojCliente = this.customerSelected.loja;
         this.cart.nomeCliente = this.customerSelected.nome;
 
         let isSincCart: boolean = true;
 
-        this.http.post(`${this.url}/curso/api/cart`,this.cart).subscribe({
-            next: (value) => isSincCart = true,
+        this.http.post<Cart>(`${this.url}/curso/api/cart`,this.cart).subscribe({
+            next: (value) => {isSincCart = true; this.cart.codigo = value.codigo},
             error: (err) => console.log(`error`,err),
             complete:() => {}
         })
-        
+
         return isSincCart;
     }
 
@@ -52,12 +53,18 @@ export class CartService implements OnDestroy{
         this.http.get<Cart>(`${this.url}/curso/api/cart/itens/${codCliente}/${lojCliente}`)
         .subscribe({
             next: (value) => {
+
+                this.cart = value;
+                this.cart.valor = 0;
+                this.cart.itens.forEach((el)=> el.ativo ? this.cart.valor =+ (el.item.quantidade * el.item.preco) : null)
+
+                /*
                 this.cart = new Cart();
                 this.cart.codCliente = value.codCliente;
                 this.cart.lojCliente = value.lojCliente;
                 this.cart.nomeCliente = value.nomeCliente;
                 this.cart.valor = value.valor;
-                this.cart.itens = value.itens;
+                this.cart.itens = value.itens;*/
 
                 this.cart$.next(this.cart);
                 this.value$.next(this.cart.valor);
