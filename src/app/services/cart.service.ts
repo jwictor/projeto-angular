@@ -86,7 +86,7 @@ export class CartService implements OnDestroy{
         let lojCliente: string = this.customerSelected.loja;
         let codCart: string = this.cart.codigo;
 
-        if(codCart){
+        if(!codCart){
             this.notify.warning({duration: 2000, message: 'Carrinho vazio'}) 
             return false;
         } 
@@ -100,10 +100,13 @@ export class CartService implements OnDestroy{
             this.cart$.next(this.cart),
             this.value$.next(0)
         },
-            error: (err) => {console.log(`erro`, err)},
+            error: (err) => {console.log(`erro`, err),
+                            this.hiddenLoading$.next(true),
+                            this.notify.error({ duration: 2000, message: `Erro no envio do carrinho: ${err}`})
+            },
             complete: () => {this.hiddenLoading$.next(true);}
         })
-
+       
         return isConfirm;
     }
 
