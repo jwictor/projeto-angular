@@ -7,11 +7,13 @@ import { CatalogpageComponent } from './paginas/catalogpage/catalogpage.componen
 import { BudgetpageComponent } from './paginas/budgetpage/budgetpage.component';
 import { LogoffpageComponent } from './paginas/logoffpage/logoffpage.component';
 import { ErrorpageComponent } from './paginas/errorpage/errorpage.component';
+import { ProspectsComponent } from './paginas/prospects/prospects.component';
 
 export const routes: Routes = [
     {path: 'login', component: LoginpageComponent},
     {path: '', component: MasterpageComponent, children: [
         {path: 'home', component: HomeComponent},
+        {path: 'prospects', component: ProspectsComponent},
         {path: 'customers', component: CustomerpageComponent},
         {path: 'catalog', component: CatalogpageComponent},
         {path: 'budgets', component: BudgetpageComponent},

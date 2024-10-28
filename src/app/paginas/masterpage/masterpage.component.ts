@@ -91,6 +91,7 @@ export class MasterpageComponent implements OnDestroy {
 
     readonly menus: PoMenuPanelItem[] = [
       {label: 'Home', link: 'home', action: this.clickItemMenu.bind(this), icon: 'po-icon po-icon-home'},
+      {label: 'Prospects', link: 'prospects', action: this.clickItemMenu.bind(this), icon: 'ph ph-tag-simple' },
       {label: 'Clientes', link: 'customers', action: this.clickItemMenu.bind(this), icon: 'po-icon po-icon-user'},
       {label: 'Catalogo', link: 'catalog', action: this.clickItemMenu.bind(this), icon: 'po-icon po-icon-grid'},
       {label: 'Produtos', link: 'budgets', action: this.clickItemMenu.bind(this), icon: 'po-icon po-icon-pushcart'},
