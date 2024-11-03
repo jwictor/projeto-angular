@@ -4,4 +4,11 @@
  [p-breadcrumb]="{items: [{label: 'Home', link: '/home'}, {label: 'Prospects'}]}"
  [p-fields]="fields"
  [p-service-api]="url"
+ [p-actions]="actions"
+ [p-table-custom-actions]="tableActions"
+ 
 />
+
+<po-modal #prospecDetailModal [p-title]="nomeprospect">
+    <po-dynamic-view [p-fields]="prospctFields" [p-value]="prospectData" />
+</po-modal>
