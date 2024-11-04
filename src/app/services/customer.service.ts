@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -17,9 +17,12 @@ export class CustomerService {
   constructor() {}
 
   public getCustomers(): Observable<Array<Customer>> {
-    let url: string = `${this.#url}/curso/api/tabelas/sa1`
+    let url: string = `${this.#url}/curso/api/tabelas/sa1`;
+    let headers = new HttpHeaders();
+    let token = localStorage.getItem('access_token');
+    headers = headers.append('Authorization',`Bearer ${token}`)
 
-    return this.#http.get<Array<Customer>>(url)
+    return this.#http.get<Array<Customer>>(url);
   }
 
   public setListCustomer(listCustomer: Customer[]): void {

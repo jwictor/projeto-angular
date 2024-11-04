@@ -16,7 +16,8 @@ import {
   PoComboComponent,
   PoNotification,
   PoDialogService,
-  PoLoadingModule} from '@po-ui/ng-components';
+  PoLoadingModule,
+  PoMenuItem} from '@po-ui/ng-components';
 import { CartService } from '../../services/cart.service';
 import { CustomerService } from '../../services/customer.service';
 import { environment } from '../../../environments/environment.development';
@@ -24,6 +25,7 @@ import { Subscription } from 'rxjs';
 import { Cart, ItemCart } from '../../classes/cart';
 import { FormsModule } from '@angular/forms';
 import { Customer } from '../../classes/customer';
+import { Profile } from '../../classes/profile';
 
 @Component({
   selector: 'app-masterpage',
@@ -65,6 +67,7 @@ export class MasterpageComponent implements OnDestroy {
     hiddenOverlayCart: boolean = true;
 
     urlfiltercustomer: string = `${environment.url}/curso/api/tabelas/sa1`;
+    profile: Profile = new Profile();
 
     @ViewChild('slideCart') slideCart !: PoPageSlideComponent;
     @ViewChild('modalCustomer') modalCustomerEl !: PoModalComponent;
@@ -72,6 +75,10 @@ export class MasterpageComponent implements OnDestroy {
 
 
     constructor(){
+
+      this.profile.name = 'Vendedor Padrao'
+      this.profile.coduser = '9999'
+      
       const subValue = this.valueCart$.subscribe(vlr => this.valueCart = vlr)
       const subCart = this.cart$.subscribe(cart => this.cart = cart)
       const subList = this.listCustomer$.subscribe(list => this.listCustomer = list);
@@ -89,13 +96,13 @@ export class MasterpageComponent implements OnDestroy {
     }
     
 
-    readonly menus: PoMenuPanelItem[] = [
-      {label: 'Home', link: 'home', action: this.clickItemMenu.bind(this), icon: 'po-icon po-icon-home'},
-      {label: 'Prospects', link: 'prospects', action: this.clickItemMenu.bind(this), icon: 'ph ph-tag-simple' },
-      {label: 'Clientes', link: 'customers', action: this.clickItemMenu.bind(this), icon: 'po-icon po-icon-user'},
-      {label: 'Catalogo', link: 'catalog', action: this.clickItemMenu.bind(this), icon: 'po-icon po-icon-grid'},
-      {label: 'Produtos', link: 'budgets', action: this.clickItemMenu.bind(this), icon: 'po-icon po-icon-pushcart'},
-      {label: 'Exit', action: this.clickItemLogoff.bind(this), icon: 'po-icon po-icon-exit'}
+    readonly menus: PoMenuItem[] = [
+      {label: 'Home', shortLabel: 'Home' , link: 'home', action: this.clickItemMenu.bind(this), icon: 'po-icon po-icon-home'},
+      {label: 'Prospects', shortLabel: 'Prospects' , link: 'prospects', action: this.clickItemMenu.bind(this), icon: 'ph ph-tag-simple' },
+      {label: 'Clientes', shortLabel: 'Customers' , link: 'customers', action: this.clickItemMenu.bind(this), icon: 'po-icon po-icon-user'},
+      {label: 'Catalogo', shortLabel: 'Catalog' , link: 'catalog', action: this.clickItemMenu.bind(this), icon: 'po-icon po-icon-grid'},
+      {label: 'Produtos', shortLabel: 'Budgets' , link: 'budgets', action: this.clickItemMenu.bind(this), icon: 'po-icon po-icon-pushcart'},
+      {label: 'Exit', shortLabel: 'Exit' , action: this.clickItemLogoff.bind(this), icon: 'po-icon po-icon-exit'}
     ]
 
     readonly actions: Array<PoPageAction> = [

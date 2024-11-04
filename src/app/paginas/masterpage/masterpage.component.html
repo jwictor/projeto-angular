@@ -1,13 +1,24 @@
-<div class="po-wrapper-menu-panel">
-    <po-menu-panel 
+<div class="po-wrapper">
+    <po-menu
+    p-short-logo="crm128.png"
     [p-menus]="menus" 
-    p-logo="https://po-ui.io/assets/po-logos/po_color_bg.svg"/>
-
+    [p-collapsed]="true"
+    [p-automatic-toggle]="false"
+    >
+    <div *p-menu-header-template>
+        <img src="crm128.png" id="logo" style="margin-left: 20%;"/>
+        <p class="po-p-1 po-font-title">{{profile.name}}</p>
+        <p class="po-p-1 po-font-subtitle">{{profile.coduser}}</p>
+    </div>
+</po-menu>
+<!--
     <po-page-default 
     [p-title]="customerSelected.nome"
     [p-actions]="actions">
         <router-outlet></router-outlet>
     </po-page-default>
+-->
+    <router-outlet />
 </div>
 
 <po-page-slide #slideCart p-title="Carrinho" p-size="sm" style="position: relative;">
