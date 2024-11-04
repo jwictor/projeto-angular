@@ -1,1 +1,7 @@
-<p>loginpage works!</p>
+<po-page-login 
+    #loginPage
+    p-background="bg.jpg"
+    (p-login-submit)="confirmLogin(loginPage)"
+/>
+
+<po-loading-overlay [hidden]="isHiddenLoading" p-text="Efetuando Login"/>

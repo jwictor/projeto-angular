@@ -95,7 +95,7 @@ export class MasterpageComponent implements OnDestroy {
       {label: 'Clientes', link: 'customers', action: this.clickItemMenu.bind(this), icon: 'po-icon po-icon-user'},
       {label: 'Catalogo', link: 'catalog', action: this.clickItemMenu.bind(this), icon: 'po-icon po-icon-grid'},
       {label: 'Produtos', link: 'budgets', action: this.clickItemMenu.bind(this), icon: 'po-icon po-icon-pushcart'},
-      {label: 'Exit', link: 'logoff', action: this.clickItemMenu.bind(this), icon: 'po-icon po-icon-exit'}
+      {label: 'Exit', action: this.clickItemLogoff.bind(this), icon: 'po-icon po-icon-exit'}
     ]
 
     readonly actions: Array<PoPageAction> = [
@@ -107,6 +107,20 @@ export class MasterpageComponent implements OnDestroy {
 
     clickItemMenu(menu: PoMenuPanelItem):void {
         this.title = menu.label
+    }
+
+    clickItemLogoff(){
+      this.#dialog.confirm({
+        title: 'Confirmação de Logoff',
+        message: 'Confirma o logoff da aplicação?',
+        confirm: () => {
+          localStorage.clear();
+          location.reload();
+        },
+        cancel: () => {
+
+        }
+      })
     }
 
     clickOpenCart(): void {
