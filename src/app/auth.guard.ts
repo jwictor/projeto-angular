@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { LoginService } from './services/login.service';
+import { ProfileService } from './services/profile.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
 
@@ -10,6 +11,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   let access_token = localStorage.getItem('access_token');
   let refresh_token = localStorage.getItem('refresh_token');
   let expires_in = localStorage.getItem('expires_in');
+  let profileService = inject(ProfileService);
 
 
   if(!username) {
@@ -19,6 +21,7 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   if(typeof expires_in === 'string'){
     if(Number(expires_in) > Date.now()){
+      profileService.loadprofile(username);
      return true;
     }
   }
@@ -30,6 +33,7 @@ export const authGuard: CanActivateFn = (route, state) => {
         localStorage.setItem('access_token', value.access_token);
         localStorage.setItem('refresh_token', value.refresh_token);
         localStorage.setItem('expires_in',(value.expiress_in * 1000 + Date.now()).toString());
+        profileService.loadprofile(username);
       },
       error: err => {
         localStorage.clear();

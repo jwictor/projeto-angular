@@ -26,6 +26,7 @@ import { Cart, ItemCart } from '../../classes/cart';
 import { FormsModule } from '@angular/forms';
 import { Customer } from '../../classes/customer';
 import { Profile } from '../../classes/profile';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-masterpage',
@@ -68,6 +69,8 @@ export class MasterpageComponent implements OnDestroy {
 
     urlfiltercustomer: string = `${environment.url}/curso/api/tabelas/sa1`;
     profile: Profile = new Profile();
+    profileService = inject(ProfileService);
+    profile$ = this.profileService.getProfile();
 
     @ViewChild('slideCart') slideCart !: PoPageSlideComponent;
     @ViewChild('modalCustomer') modalCustomerEl !: PoModalComponent;
@@ -84,11 +87,14 @@ export class MasterpageComponent implements OnDestroy {
       const subList = this.listCustomer$.subscribe(list => this.listCustomer = list);
       const subCustomer = this.customerSelected$.subscribe(customer => this.customerSelected = customer)
       const subHidden = this.hiddenOverlayCart$.subscribe(hidden => this.hiddenOverlayCart = hidden);
+      const subProfile = this.profile$.subscribe(value => this.profile = value);
+
       this.sub.add(subValue)
       this.sub.add(subCart)
       this.sub.add(subList);
       this.sub.add(subCustomer);
       this.sub.add(subHidden);
+      this.sub.add(subProfile);
     }
 
     ngOnDestroy(): void {
