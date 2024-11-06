@@ -14,13 +14,13 @@ export class LoginService {
     private router = inject(Router);
         
     public sendLogin(username: string, password: string): Observable<LoginData> {
-        let urlLogin: string = `${this.url}/api/oauth2/v1/token?grant_type=password&username=${username}$password=${password}`
+        let urlLogin: string = `${this.url}/api/oauth2/v1/token?grant_type=password&username=${username}&password=${password}`
         return this.http.post<LoginData>(urlLogin, null);
     }
 
-    public refreshLogin(refresh_token: string): Observable<LoginData> {
-        let urlRefresh: string = `${this.url}/api/oauth2/vi/token?grant_type=refresh_token&refresh_token=${refresh_token}`
-        return this.http.post<LoginData>(urlRefresh,null);
-    }
+   public refreshLogin(refresh_token: string): Observable<LoginData> {
+       let urlRefresh: string = `${this.url}/api/oauth2/vi/token?grant_type=refresh_token&refresh_token=${refresh_token}`
+       return this.http.post<LoginData>(urlRefresh,null);
+   }
 
 }

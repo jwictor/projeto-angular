@@ -32,7 +32,7 @@ export const authGuard: CanActivateFn = (route, state) => {
       next: value => {
         localStorage.setItem('access_token', value.access_token);
         localStorage.setItem('refresh_token', value.refresh_token);
-        localStorage.setItem('expires_in',(value.expiress_in * 1000 + Date.now()).toString());
+        localStorage.setItem('expires_in',(value.expires_in * 1000 + Date.now()).toString());
         profileService.loadprofile(username);
       },
       error: err => {

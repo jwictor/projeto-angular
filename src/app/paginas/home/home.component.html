@@ -1,1 +1,11 @@
-<p>home works!</p>
+
+<po-page-default 
+    p-title="DashBoard" 
+    [p-breadcrumb]="{items: [{label: 'Home', link: ''}, {label: 'Dasboard'}]}">
+    <po-widget p-title="Orçamentos" class="po-lg-6" p-primary-label="Detalhes">
+        <po-chart [p-type]="chartBarras" [p-series]="this.orcamentos"/>
+    </po-widget>
+    <po-widget p-title="Pedidos" class="po-lg-6">
+        <po-chart [p-series]="this.pedidos" />
+    </po-widget>
+</po-page-default>

@@ -17,7 +17,8 @@ import {
   PoNotification,
   PoDialogService,
   PoLoadingModule,
-  PoMenuItem} from '@po-ui/ng-components';
+  PoMenuItem,
+  PoToolbarModule} from '@po-ui/ng-components';
 import { CartService } from '../../services/cart.service';
 import { CustomerService } from '../../services/customer.service';
 import { environment } from '../../../environments/environment.development';
@@ -43,6 +44,7 @@ import { ProfileService } from '../../services/profile.service';
     PoModalModule,
     PoFieldModule,
     PoLoadingModule,
+    PoToolbarModule,
     FormsModule],
   templateUrl: './masterpage.component.html',
   styleUrl: './masterpage.component.css'

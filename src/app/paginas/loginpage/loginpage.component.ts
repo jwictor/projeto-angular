@@ -49,10 +49,12 @@ export class LoginpageComponent implements OnDestroy {
          
          localStorage.setItem('access_token', this.loginData.access_token);
          localStorage.setItem('refresh_token', this.loginData.refresh_token);
-         localStorage.setItem('expires_in', (loginNow + (this.loginData.expiress_in * 1000)).toString());
+         localStorage.setItem('expires_in', (loginNow + (this.loginData.expires_in * 1000)).toString());
          localStorage.setItem('username', loginPage.login);
 
-         this.profileService.loadprofile(loginPage.login);
+        this.profileService.loadprofile(loginPage.login);
+        
+        console.log('expiress', this.loginData.expires_in)
         
          this.isHiddenLoading = true;
          this.router.navigate(['home']);

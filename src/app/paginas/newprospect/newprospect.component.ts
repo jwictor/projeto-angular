@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { ForceOptionComponentEnum, PoButtonModule, PoDynamicFormField, PoDynamicModule, PoNotificationService } from '@po-ui/ng-components';
+import { ForceOptionComponentEnum, PoButtonModule, PoDynamicFormField, PoDynamicModule, PoNotificationService, PoPageModule } from '@po-ui/ng-components';
 import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-newprospect',
   standalone: true,
-  imports: [PoDynamicModule,PoButtonModule],
+  imports: [PoDynamicModule,PoButtonModule,PoPageModule],
   templateUrl: './newprospect.component.html',
   styleUrl: './newprospect.component.css'
 })
