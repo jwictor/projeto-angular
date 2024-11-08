@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --color-toolbar-background-color-toolbar: navy;
+    --color-toolbar-color-title: white;
+}
+
+po-menu {
+    --background-color: navy;
+    --border-color: transparent;
+    --border-radius: 0;
+}
+
+po-menu-item {
+    --color: white;
+    --color-hover: dodgerBlue;
+    --color-actived: dodgerBlue;
+    --outline-color-actived: transparent;
+    --outline-color-focused: transparent;
+    --border-radius: 0;
+    --border: none;
+    --background-color-pressed: white;
+    --background-color-hover: white;
+    --background-color-actived: white;
+}
+
+po-button {
+    --color-button-danger: navy;
+    --color: navy;
+    --color-hover: dodgerBlue;
+}
