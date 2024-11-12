@@ -36,6 +36,7 @@ export class ProspectsComponent {
   public url: string = `${environment.url}/curso/api/prospects`;
 
   public actions: PoPageDynamicTableActions = { new: '/prospects/new', remove: true };
+  
   public tableActions: PoPageDynamicTableCustomAction[] = [
     {label: 'Detalhes', action: this.openDetailProspect.bind(this), icon: 'pu ph-user' }
   ];
